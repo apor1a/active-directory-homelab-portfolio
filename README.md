@@ -29,8 +29,8 @@ guide would include it.
 | SIEM on separate hardware from what it watches | If the domain is compromised, the evidence shouldn't live on the same box |
 | Offense runs off a separate machine, over VPN, through a real firewall boundary | Real network telemetry instead of loopback traffic that teaches nothing |
 
-Full rationale and the tradeoffs I made against a more typical "home SOC" build
-are in [`docs/AD_Homelab_Design_Seneca.md`](docs/AD_Homelab_Design_Seneca.md).
+The full architecture write-up is in
+[`docs/homelab-architecture.md`](docs/homelab-architecture.md).
 
 ## Architecture
 

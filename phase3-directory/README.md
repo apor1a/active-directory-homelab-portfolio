@@ -2,8 +2,8 @@
 
 Numbered, idempotent scripts that build the forest from a fresh set of VMs —
 `DC01`, `DC02`, `MS01` — through OUs, groups, and the synthetic `staff.csv`
-roster. Design source of truth: `../docs/AD_Homelab_Design_Seneca.md`,
-Sections 4 and 6.
+roster. Design source of truth: `../docs/homelab-architecture.md`,
+"The environment" section.
 
 ## Script sequence
 
