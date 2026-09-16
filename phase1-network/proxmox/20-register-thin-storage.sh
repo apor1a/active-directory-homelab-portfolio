@@ -1,18 +1,20 @@
 #!/bin/bash
-# Run on cato as root.
+# Run on the node hosting backups and the SIEM, as root.
 #
 # The Proxmox installer created a ~141GB LVM-thin pool (VG pve, LV data) on
-# cato's boot SSD but never registered it as usable storage — pvesm status
-# didn't show it, and lvm-thin1/zfspool1 in storage.cfg are both scoped to
-# seneca only. This just exposes that existing, empty pool to cato so VM
-# disks (SIEM01) can land on it. It never touches cato-pbs, which owns the
-# separate 1TB HDD entirely.
+# this node's boot SSD but never registered it as usable storage — pvesm
+# status didn't show it, and my other thin/ZFS storage entries in
+# storage.cfg are scoped to my other cluster node only. This just exposes
+# that existing, empty pool to this node so VM disks (the SIEM VM) can land
+# on it. It never touches this node's backup datastore, which owns a
+# separate disk entirely.
 set -euo pipefail
 
 STORCFG=/etc/pve/storage.cfg
-STORAGE_ID=cato-lvm-thin
+STORAGE_ID=secondary-lvm-thin
 VG=pve
 THINPOOL=data
+NODE=$(hostname)
 
 if grep -q "^lvmthin: $STORAGE_ID$" "$STORCFG"; then
     echo "$STORAGE_ID already present in $STORCFG — nothing to do."
@@ -32,7 +34,7 @@ lvmthin: $STORAGE_ID
 	thinpool $THINPOOL
 	vgname $VG
 	content images,rootdir
-	nodes cato
+	nodes $NODE
 EOF
 
 echo "$STORAGE_ID registered. Verifying:"

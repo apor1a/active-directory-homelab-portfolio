@@ -102,6 +102,22 @@ guardrail that makes the whole thing safe to run is that the path from the
 attack zone into the rest of the lab stays off unless I've deliberately
 turned it on.
 
+## Where AI fits into this
+
+I build this with an AI coding assistant, and every architectural call
+above — the zone boundaries, what's Server Core versus GUI, where the SIEM
+lives, how offense stays off the cluster — is mine, made deliberately, not
+generated and accepted. The assistant is a learning tool here, not a
+replacement for doing the work: it has to explain *why* a design or a cmdlet
+is right rather than just supplying it, and it doesn't fix a script I've
+already reviewed without first saying what was actually wrong with it. The
+real bugs documented in [`PROGRESS.md`](../PROGRESS.md) — an invalid enum
+value, an idempotency check that lied about its own state, a VLAN device
+wired to the wrong interface — are exactly the kind of thing that only shows
+up once you actually run infrastructure, not something a design conversation
+would have caught. That's the gap this lab exists to close, and outsourcing
+the running of it would defeat the point.
+
 ## What I gave up to keep this small
 
 A few honest tradeoffs. I don't have a managed switch or a second physical

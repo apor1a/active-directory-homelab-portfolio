@@ -99,18 +99,40 @@ should never create a duplicate object. `phase3-directory/README.md` and
 `PROGRESS.md` both cover a couple of times that guarantee was actually broken
 and how it got fixed.
 
-## How I work with an AI pair programmer here
+## How I use AI here — a learning assistant, not a crutch
 
-The private repo this is drawn from is entirely CLAUDE.md-driven: every
-infrastructure change is a script, nothing is configured by clicking, and a
-few rules are non-negotiable regardless of how the request is phrased —
-synthetic data only (nothing from my employer ever touches this lab), no
-committed secrets, and any change to the firewall's WAN-facing rules gets an
-explicit "what's changing and why" plus a prompt to verify externally, never
-an assumption that it worked. The point of those rules is to keep the
-learning honest: the assistant explains *why* a cmdlet or design choice is
-correct instead of just running it, and doesn't silently fix a script I wrote
-myself without saying what was wrong first.
+I use an AI coding assistant to help build this, and I've deliberately set
+the rules of that collaboration up so it accelerates the learning instead of
+replacing it:
+
+- **I have to understand every change before it lands.** The assistant
+  explains *why* a cmdlet or design choice is correct, not just what to run —
+  and where AD offers two legitimate ways to do something, it tells me both
+  and says which one an administrator would actually reach for.
+- **It doesn't silently fix code I've reviewed and approved.** When the
+  assistant flags a problem in an existing script, the rule is: say what was
+  wrong first, before touching it. Several of the real bugs in
+  [`PROGRESS.md`](PROGRESS.md) — the invalid `WinThreshold` enum value, the
+  idempotency guard that produced a false "already done" — sat in
+  scripts that had already been written and reviewed, and only surfaced once
+  they actually ran against a real domain controller. Review doesn't replace
+  hands-on execution, and I don't treat it like it does.
+- **High-stakes changes start in review, not execution.** Anything touching
+  the firewall's internet-facing rules, a domain controller promotion, or a
+  bulk GPO edit gets planned and shown to me before anything runs — nothing
+  destructive executes on autopilot.
+- **Synthetic data and no committed secrets are non-negotiable**, regardless
+  of how a request is phrased — nothing from my employer touches this lab,
+  and there's no scenario where the assistant commits a credential on my
+  behalf.
+
+The point of all of it: the assistant handles the mechanical scaffolding
+(idempotency checks, boilerplate, catching a typo'd cmdlet parameter) so I
+spend my time on the part that's actually the goal — reading `Get-WinEvent`
+output, understanding why Kerberos rejects a skewed clock, working out why a
+firewall rule that looks correct doesn't fire. I still hit that class of bug
+myself, on my own scripts, running against my own domain controller. That's
+the intended outcome, not a gap in the process.
 
 ## Stack
 

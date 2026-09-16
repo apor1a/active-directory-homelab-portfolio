@@ -33,6 +33,14 @@ created — invisible until something actually tried to use it, months later,
 and confirmed with a 0-packet capture on the interface itself. Looked correct
 everywhere else (bridge tagging, firewall rules); passed zero packets.
 
+**A VPN client that failed silently inside a container.** An unprivileged
+LXC container needs `/dev/net/tun` explicitly passed through — Proxmox
+doesn't do it by default — and the VPN client's startup command failed
+without any error pointing at the actual missing device. Fixed with an
+explicit cgroup device allow and bind-mount entry in the container config,
+plus enabling IP forwarding inside it, since the container was standing in
+as a subnet router.
+
 **Firewall rules that looked right and matched nothing.** Two separate
 instances: a cloned rule that kept the *source* zone from the interface it was
 cloned from (matched nothing on the new interface), and an inter-zone admin

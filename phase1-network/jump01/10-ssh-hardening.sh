@@ -1,5 +1,5 @@
 #!/bin/bash
-# Run on seneca as root.
+# Run on the Proxmox node hosting JUMP01, as root.
 #
 # JUMP01 (VMID 106) was built by hand 2026-08-31 — see
 # phase1-network/opnsense/vlan-interfaces.md "Secure remote access". Its
@@ -9,14 +9,14 @@
 # version-controlled setting. This script makes both authoritative: it
 # rewrites authorized_keys to contain exactly the dedicated lab keypair
 # (dropping any other key that happens to be present, e.g. one that also
-# unlocks seneca/cato) and pins the three auth directives explicitly,
+# unlocks the rest of my homelab) and pins the three auth directives explicitly,
 # closing PasswordAuthentication globally rather than only for root.
 #
 # Safe to re-run after a from-scratch rebuild of JUMP01: every step is
 # idempotent. Also safe in the "something went wrong" sense — this never
 # touches JUMP01 over the network. `pct exec` attaches to the container
 # directly through Proxmox, so even a bad sshd_config edit stays
-# recoverable from seneca regardless of what happens to sshd.
+# recoverable from the Proxmox host regardless of what happens to sshd.
 set -euo pipefail
 
 CTID=106
