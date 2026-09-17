@@ -1,0 +1,22 @@
+# Secrets — never commit
+secrets/*
+*.key
+*.pem
+*.pfx
+*.env
+wg*.conf
+*-credentials*
+unattend.xml
+# ...but keep templates (must come last to win)
+!secrets/*.example
+!**/*.example
+
+# Config exports that embed credentials
+phase1-network/opnsense/config-*.xml
+
+# Artefacts
+*.iso
+*.vhdx
+*.log
+*.pcap
+.DS_Store
