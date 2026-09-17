@@ -1,10 +1,10 @@
 # AD Security Homelab
 
 A Windows Active Directory environment, built, instrumented, and (eventually)
-attacked and defended, entirely from scripts, on a small self-hosted Proxmox
-cluster. Everything here is synthetic — a fictional law firm, fictional staff,
-fictional domain — built to close a specific gap: reading intrusion reports
-about Active Directory environments without ever having run one.
+defended on a small self-hosted Proxmox
+cluster. Bluegill & Bass LLP is a fictional law firm with a real active directory architecture that mirrors the basic organizational units of a real law practice. Everything here is synthetic — a fictional law firm, fictional staff,
+fictional domain — built to teach me
+about Active Directory environments without breaking something important.
 
 > **Note on this repo.** This is a sanitized portfolio copy of a private
 > working repo. Anything that identifies my real home network — host IPs, the
