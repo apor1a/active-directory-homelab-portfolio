@@ -17,17 +17,14 @@ about Active Directory environments without breaking something important.
 ## Why this exists
 
 I'm a CTI analyst with a Linux/network background, learning Windows, AD, and
-PowerShell by building the thing I usually only read about after it's already
-been compromised. The design principle driving every choice below: **cut
-anything that doesn't teach AD or PowerShell**, even when a "real" SOC lab
-guide would include it.
+PowerShell by building a "real" enterprise environment from scratch. The manual creation and all inevitable failures are part of the design principle of the project.
 
 | This lab does | Because |
 |---|---|
-| Small domain (2 DCs, 1 member server, 3 endpoints), deep instrumentation | Enough for real Kerberos/replication/GPO/SMB behavior; small enough to know every host by name |
-| **Server Core only** — no GUI on any server | Removes the option to click. Every change becomes a script you can re-run, diff, and commit — the fastest route to PowerShell fluency |
-| SIEM on separate hardware from what it watches | If the domain is compromised, the evidence shouldn't live on the same box |
-| Offense runs off a separate machine, over VPN, through a real firewall boundary | Real network telemetry instead of loopback traffic that teaches nothing |
+| Small domain (2 DCs, 1 member server, 3 endpoints), deep instrumentation | Enough for real Kerberos/replication/GPO/SMB behavior given my hardware constraints |
+| **Server Core only** — no GUI on any server | Forces me to do it the hard way and learn powershell. Every change becomes a script I can re-run, tweak, and refine over time as I get better. |
+| SIEM on separate hardware | This is both security best practice and a hardware constraint. If the domain is compromised, the telemetry shouldn't live on the same machine. Also RAM is expensive |
+| Offense runs off a separate machine, over VPN, through a real firewall boundary | Real network telemetry instead of loopback traffic that teaches bad habits |
 
 The full architecture write-up is in
 [`docs/homelab-architecture.md`](docs/homelab-architecture.md).
@@ -52,7 +49,7 @@ Two-node Proxmox cluster, five network zones behind an OPNsense firewall:
 
 - **CORP-SRV / CORP-CLI** — the AD lab itself: two domain controllers, one
   member server, Windows 11 workstations.
-- **RANGE** — where offense happens, reached over a WireGuard tunnel from a
+- **RANGE** — offense traffic, reached over a WireGuard tunnel from a
   separate physical machine, never from inside the cluster. Its firewall path
   to CORP is disabled by default and toggled by hand only for an exercise.
 - **MGMT/SOC** — the SIEM (Wazuh) and backup server, deliberately off the same
