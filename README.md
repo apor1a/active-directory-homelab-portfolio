@@ -2,13 +2,12 @@
 
 A Windows Active Directory environment, built, instrumented, and (eventually)
 defended on a small self-hosted Proxmox
-cluster. Bluegill & Bass LLP is a fictional law firm with a real active directory architecture that mirrors the basic organizational units of a real law practice. Everything here is synthetic — a fictional law firm, fictional staff,
-fictional domain — built to teach me
+cluster. Bluegill & Bass LLP is a fictional law firm with a real active directory architecture that mirrors the basic organizational units of a real law practice. Everything here is synthetic and built to teach me
 about Active Directory environments without breaking something important.
 
 > **Note on this repo.** This is a sanitized portfolio copy of a private
-> working repo. Anything that identifies my real home network — host IPs, the
-> ISP, and the domain my AD lab is delegated under — is marked
+> working repo. Anything that identifies my real home network (real IPs, the
+> ISP, and the domain my AD lab is delegated under) is marked
 > `REDACTED FOR PRIVACY` or swapped for a placeholder (the AD domain itself
 > reads as `bluegillbass.lab` throughout, since the scripts need a real,
 > consistent domain name to stay readable). Everything else, including the
@@ -16,7 +15,7 @@ about Active Directory environments without breaking something important.
 
 ## Why this exists
 
-I'm a CTI analyst with a Linux/network background, learning Windows, AD, and
+I'm a CTI analyst with a Linux/network background but not a lot of Windows and AD experience. I'm learning Windows, AD, and
 PowerShell by building a "real" enterprise environment from scratch. The manual creation and all inevitable failures are part of the design principle of the project.
 
 | This lab does | Because |
